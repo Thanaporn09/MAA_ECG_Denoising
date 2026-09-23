@@ -1,0 +1,77 @@
+stage: 1
+method: clean_memory_curation
+seed: 42
+out_dir: results/stage1/seed42
+backbone:
+  in_channels: 1
+  out_channels: 1
+  enc_channels: [16, 32, 64]
+  dec_channels: [32, 16, 16]
+  encoder_kernels: [7, 5, 3, 3]
+  decoder_kernels: [3, 5, 7]
+  dilation: 2
+  pool_kernels: [5, 2, 2]
+  use_norm: true
+  use_skip: false
+memory:
+  num_slots: 48
+  top_k: 8
+  key_dim: 32
+  value_dim: 64
+  num_value_bases: 6
+  router_window_size: 13
+  temperature: 0.1
+memory_initialization:
+  enabled: true
+  seed: 42
+  max_samples: 512
+  key_fit_tokens: 15000
+  key_iterations: 30
+  value_iterations: 15
+loss:
+  lambda_l1: 1.0
+  lambda_spec: 0.1
+  eps: 1.0e-8
+dataset:
+  preprocessing: pre_normalized_instance_noisy_zscore_triplets
+  cache_signals: false
+  relation_atol: 1.0e-5
+  relation_rtol: 1.0e-5
+  pair_audit_samples: null
+  splits:
+    train:
+      root: datasets/MITDB_ID_ICLR/train
+      source: MITDB
+    val:
+      root: datasets/MITDB_ID_ICLR/val
+      source: MITDB
+    test:
+      root: datasets/QTDB_few_shot/test
+      source: QTDB
+loader:
+  batch_size: 16
+  num_workers: 0
+  pin_memory: true
+  persistent_workers: false
+  prefetch_factor: 2
+optimizer:
+  type: AdamW
+  lr: 1.5e-4
+  weight_decay: 0.5
+scheduler:
+  type: CosineAnnealingLR
+  T_max: 150
+  eta_min: 0.0
+training:
+  epochs: 150
+  grad_clip: 1.0
+  amp: true
+runtime:
+  device: auto
+  deterministic: false
+  cudnn_benchmark: false
+  allow_tf32: false
+  num_threads: 4
+checkpoint_selection:
+  metric: validation_reconstruction_rmse
+  mode: min
