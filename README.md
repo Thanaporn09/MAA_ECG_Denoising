@@ -3,7 +3,7 @@
 This repository contains only the LUNet implementation for the manuscript's two-stage method.
 
 <div align="center">
-  <img src="Figure1.png"/>
+  <img src="Figure1_main.jpg"/>
 </div>
 
 Stage 1, Clean-Memory Curation, trains the clean teacher pathway end to end:
