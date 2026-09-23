@@ -1,4 +1,4 @@
-# LUNet manuscript release
+# Learning to Access Latent Memory: Generalizable ECG Restoration under Distribution Shift
 
 This repository contains only the LUNet implementation for the manuscript's two-stage method.
 
