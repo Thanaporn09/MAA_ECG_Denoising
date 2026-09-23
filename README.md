@@ -2,6 +2,10 @@
 
 This repository contains only the LUNet implementation for the manuscript's two-stage method.
 
+<div align="center">
+  <img src="Figure1.png"/>
+</div>
+
 Stage 1, Clean-Memory Curation, trains the clean teacher pathway end to end:
 
 `x_C -> E_T -> z_T -> memory router -> key-value memory -> memory readout -> D_T -> x_hat_C_T`
